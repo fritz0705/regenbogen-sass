@@ -1,0 +1,53 @@
+$regenbogen: ();
+
+@function generate_regenbogen($steps) {
+	$rb: ();
+	$hue_step: 360 / $steps;
+
+	@for $i from 0 through 360 {
+		$color: hsl($i * $hue_step, 100%, 50%);
+		$rb: append($rb, $color, comma);
+	};
+
+	@return $rb;
+}
+
+$regenbogen: generate_regenbogen(360);
+
+@function regenbogen($step) {
+	$new_regenbogen: ();
+
+	@for $i from 0 through (length($regenbogen) - 1) {
+		$offset: ($step + $i) % length($regenbogen);
+		$color: nth($regenbogen, $offset + 1);
+		$new_regenbogen: append($new_regenbogen, $color, comma);
+	};
+
+	@return $new_regenbogen;
+}
+
+@mixin regenbogen_mixin($step) {
+	background: -webkit-linear-gradient(left, regenbogen($step));
+}
+
+.regenbogen {
+	background: -webkit-linear-gradient(
+		left,
+		$regenbogen
+	);
+}
+
+.regenbogen-animation {
+	-webkit-animation: regenbogen 1s;
+	-webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes regenbogen {
+	@for $j from 0 through (length($regenbogen)) {
+		$percentage: ($j / length($regenbogen)) * 100%;
+
+		#{$percentage} {
+			@include regenbogen_mixin($j);
+		}
+	}
+}
