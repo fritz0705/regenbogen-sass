@@ -2,27 +2,30 @@
 
 $regenbogen: regenbogen_create(100);
 
-.regenbogen {
-	background: -webkit-linear-gradient(
-		left,
-		$regenbogen
-	);
-}
-
-.regenbogen-animation {
-	-webkit-animation: regenbogen 1s;
-	-webkit-animation-iteration-count: infinite;
-}
-
 @-webkit-keyframes regenbogen {
 	@for $j from 0 through length($regenbogen) {
 		$perc: ($j / length($regenbogen)) * 100%;
 
 		#{$perc} {
-			background: -webkit-linear-gradient(
-				left,
+			background: -webkit-radial-gradient(
 				regenbogen_shift($regenbogen, $j)
 			);
 		}
 	}
 }
+
+html, body {
+	margin: 0;
+	padding: 0;
+
+	height: 100%;
+}
+
+.regenbogen {
+	width: 100%;
+	height: 100%;
+
+	-webkit-animation: regenbogen 0.5s;
+	-webkit-animation-iteration-count: infinite;
+}
+
