@@ -2,11 +2,11 @@ SCSS ?= scss
 
 .PHONY: all clean
 
-all: regenbogen.css
+all: example.css
 
 %.css: %.scss
 	$(SCSS) $(SCSSFLAGS) $^ > $@
 
 clean:
-	$(RM) regenbogen.css
+	$(RM) example.css
 

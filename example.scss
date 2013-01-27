@@ -1,0 +1,28 @@
+@import "regenbogen.scss";
+
+$regenbogen: regenbogen_create(100);
+
+.regenbogen {
+	background: -webkit-linear-gradient(
+		left,
+		$regenbogen
+	);
+}
+
+.regenbogen-animation {
+	-webkit-animation: regenbogen 1s;
+	-webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes regenbogen {
+	@for $j from 0 through length($regenbogen) {
+		$perc: ($j / length($regenbogen)) * 100%;
+
+		#{$perc} {
+			background: -webkit-linear-gradient(
+				left,
+				regenbogen_shift($regenbogen, $j)
+			);
+		}
+	}
+}
